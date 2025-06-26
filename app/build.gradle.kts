@@ -71,6 +71,7 @@ dependencies {
     testImplementation(libs.junit)
     testImplementation("com.squareup.okhttp3:mockwebserver:4.12.0") // for testing api and retrofit
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.10.2") // for testing coroutines
+    testImplementation("org.mockito.kotlin:mockito-kotlin:5.3.1") // for testing repositories
 
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
