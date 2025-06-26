@@ -46,10 +46,8 @@ class BinRepositoryImplTest {
 
         whenever(api.getBinInfo(bin)).thenReturn(dto)
 
-        // when
         val result = repository.getBinInfo(bin)
 
-        // then
         assertEquals("unknown", result.numberLength)
         assertEquals("unknown", result.luhn)
         assertEquals("visa", result.scheme)

@@ -1,8 +1,6 @@
 package com.example.ecosystemalpha.di
 
 import com.example.ecosystemalpha.data.remote.services.BinApiService
-import com.example.ecosystemalpha.data.repository.BinRepositoryImpl
-import com.example.ecosystemalpha.domain.repository.BinRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -13,7 +11,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 @Module
 @InstallIn(SingletonComponent::class)
-class NetworkModule {
+object NetworkModule {
 
     @Provides
     fun provideRetrofit(): Retrofit {
@@ -26,10 +24,5 @@ class NetworkModule {
     @Provides
     fun provideBinApiService(retrofit: Retrofit): BinApiService {
         return retrofit.create(BinApiService::class.java)
-    }
-
-    @Provides
-    fun provideBinRepository(api: BinApiService): BinRepository {
-        return BinRepositoryImpl(api)
     }
 }
