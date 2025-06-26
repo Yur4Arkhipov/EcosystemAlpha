@@ -1,6 +1,6 @@
 package com.example.ecosystemalpha.di
 
-import com.example.ecosystemalpha.data.remote.service.BinApiService
+import com.example.ecosystemalpha.data.remote.services.BinApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

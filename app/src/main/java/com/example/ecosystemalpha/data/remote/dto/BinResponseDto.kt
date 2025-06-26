@@ -5,7 +5,7 @@ data class BinResponseDto(
     val scheme: String? = null,
     val type: String? = null,
     val brand: String?  = null,
-    val prepaid: String? = null,
+    val prepaid: Boolean? = null,
     val country: CardCountryDto? = null,
     val bank: CardBankDto? = null
 )

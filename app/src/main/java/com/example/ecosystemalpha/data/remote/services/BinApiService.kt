@@ -1,4 +1,4 @@
-package com.example.ecosystemalpha.data.remote.service
+package com.example.ecosystemalpha.data.remote.services
 
 import com.example.ecosystemalpha.data.remote.dto.BinResponseDto
 import retrofit2.http.GET
