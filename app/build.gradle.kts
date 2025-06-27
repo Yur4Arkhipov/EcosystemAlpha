@@ -62,6 +62,7 @@ dependencies {
 
     // Hilt, hilt navigation
     implementation("com.google.dagger:hilt-android:2.56.1")
+    implementation("androidx.hilt:hilt-navigation-compose:1.2.0") // for hiltViewModel()
     ksp("com.google.dagger:hilt-android-compiler:2.56.1")
 
 //    // Serialization
@@ -72,6 +73,7 @@ dependencies {
     testImplementation("com.squareup.okhttp3:mockwebserver:4.12.0") // for testing api and retrofit
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.10.2") // for testing coroutines
     testImplementation("org.mockito.kotlin:mockito-kotlin:5.3.1") // for testing repositories
+    testImplementation("app.cash.turbine:turbine:1.2.1") // for kotlinx.coroutines flow testing
 
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
