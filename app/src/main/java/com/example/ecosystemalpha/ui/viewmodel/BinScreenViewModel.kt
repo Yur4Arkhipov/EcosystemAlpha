@@ -3,7 +3,9 @@ package com.example.ecosystemalpha.ui.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.ecosystemalpha.core.util.UiState
+import com.example.ecosystemalpha.data.local.BinQueryEntity
 import com.example.ecosystemalpha.domain.model.BinInfo
+import com.example.ecosystemalpha.domain.usecase.AddBinQueryUseCase
 import com.example.ecosystemalpha.domain.usecase.GetBinInfoUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -13,11 +15,15 @@ import javax.inject.Inject
 
 @HiltViewModel
 class BinScreenViewModel @Inject constructor(
-    private val getBinInfoUseCase: GetBinInfoUseCase
+    private val getBinInfoUseCase: GetBinInfoUseCase,
+    private val addBinQueryUseCase: AddBinQueryUseCase
 ): ViewModel() {
 
     private val _binInfo = MutableStateFlow<UiState<BinInfo>>(UiState.Idle)
     val binInfo: StateFlow<UiState<BinInfo>> = _binInfo
+
+    private val _addState = MutableStateFlow<UiState<Unit>>(UiState.Idle)
+//    val addState: StateFlow<UiState<Unit>> = _addState
 
     fun loadBin(bin: String) {
         viewModelScope.launch {
@@ -30,4 +36,12 @@ class BinScreenViewModel @Inject constructor(
             }
         }
     }
+
+    fun addQuery(query: BinQueryEntity) {
+        viewModelScope.launch {
+            _addState.value = UiState.Loading
+            _addState.value = addBinQueryUseCase(query)
+        }
+    }
+
 }

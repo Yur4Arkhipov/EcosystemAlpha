@@ -21,6 +21,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -33,6 +34,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.ecosystemalpha.core.util.UiState
+import com.example.ecosystemalpha.data.local.mappers.toEntity
 import com.example.ecosystemalpha.ui.navigation.Routes
 import com.example.ecosystemalpha.ui.viewmodel.BinScreenViewModel
 
@@ -46,6 +48,14 @@ fun BinScreen(
 ) {
     val uiState by viewModel.binInfo.collectAsState()
     var input by remember { mutableStateOf("") }
+
+    LaunchedEffect(uiState) {
+        if (uiState is UiState.Success) {
+            val binInfo = (uiState as UiState.Success).data
+            val query = binInfo.toEntity(input)
+            viewModel.addQuery(query)
+        }
+    }
 
     Scaffold(
         topBar = {
