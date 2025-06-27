@@ -4,7 +4,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     id("com.google.dagger.hilt.android")
     id("com.google.devtools.ksp")
-//    id("kotlinx-serialization")
+    id("kotlinx-serialization")
 }
 
 android {
@@ -57,17 +57,16 @@ dependencies {
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
 
-//    // OkHttp3
-//    implementation("com.squareup.okhttp3:okhttp:4.12.0")
-
     // Hilt, hilt navigation
     implementation("com.google.dagger:hilt-android:2.56.1")
     implementation("androidx.hilt:hilt-navigation-compose:1.2.0") // for hiltViewModel()
     ksp("com.google.dagger:hilt-android-compiler:2.56.1")
 
-//    // Serialization
-//    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.8.0")
-//    implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0")
+    // Navigation
+    implementation("androidx.navigation:navigation-compose:2.9.0")
+
+    // Serialization
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.8.0") // for serialization routes
 
     testImplementation(libs.junit)
     testImplementation("com.squareup.okhttp3:mockwebserver:4.12.0") // for testing api and retrofit
