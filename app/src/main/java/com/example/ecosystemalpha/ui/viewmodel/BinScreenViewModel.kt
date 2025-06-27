@@ -23,17 +23,12 @@ class BinScreenViewModel @Inject constructor(
     val binInfo: StateFlow<UiState<BinInfo>> = _binInfo
 
     private val _addState = MutableStateFlow<UiState<Unit>>(UiState.Idle)
-//    val addState: StateFlow<UiState<Unit>> = _addState
 
     fun loadBin(bin: String) {
         viewModelScope.launch {
-            val result: UiState<BinInfo> = getBinInfoUseCase(bin)
             _binInfo.value = UiState.Loading
-            when(result) {
-                is UiState.Success -> _binInfo.value = result
-                is UiState.Error -> _binInfo.value = result
-                else -> _binInfo.value = UiState.Error("Unknown state")
-            }
+            val result: UiState<BinInfo> = getBinInfoUseCase(bin)
+            _binInfo.value = result
         }
     }
 

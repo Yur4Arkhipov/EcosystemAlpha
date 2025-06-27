@@ -1,5 +1,7 @@
 package com.example.ecosystemalpha.ui.screens
 
+import android.content.Intent
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -30,6 +32,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
@@ -37,6 +41,7 @@ import com.example.ecosystemalpha.core.util.UiState
 import com.example.ecosystemalpha.data.local.mappers.toEntity
 import com.example.ecosystemalpha.ui.navigation.Routes
 import com.example.ecosystemalpha.ui.viewmodel.BinScreenViewModel
+import androidx.core.net.toUri
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -48,6 +53,7 @@ fun BinScreen(
 ) {
     val uiState by viewModel.binInfo.collectAsState()
     var input by remember { mutableStateOf("") }
+    val context = LocalContext.current
 
     LaunchedEffect(uiState) {
         if (uiState is UiState.Success) {
@@ -101,8 +107,12 @@ fun BinScreen(
 
             Spacer(Modifier.height(10.dp))
 
+            val keyboardController = LocalSoftwareKeyboardController.current
             Button(
-                onClick = { viewModel.loadBin(input) },
+                onClick = {
+                    viewModel.loadBin(input)
+                    keyboardController?.hide()
+                },
                 enabled = input.length >= 6 && input.length <= 8
             ) {
                 Text("Lookup")
@@ -121,7 +131,14 @@ fun BinScreen(
                     Text("Type: ${binInfo.type}")
                     Text("Prepaid: ${binInfo.prepaid}")
                     Text("Country: ${binInfo.countryEmoji} ${binInfo.countryName}")
-                    Text("Latitude: ${binInfo.countryLatitude}, Longitude: ${binInfo.countryLongitude}")
+                    Text(
+                        text = "Latitude: ${binInfo.countryLatitude}, Longitude: ${binInfo.countryLongitude}",
+                        modifier = Modifier.clickable {
+                            val uri = "geo:${binInfo.countryLatitude},${binInfo.countryLongitude}"
+                            val intent = Intent(Intent.ACTION_VIEW, uri.toUri())
+                            context.startActivity(intent)
+                        }
+                    )
                     Text("Bank name: ${binInfo.bankName}")
                     Text("Bank phone: ${binInfo.bankPhone}")
                     Text("Bank url: ${binInfo.bankUrl}")
